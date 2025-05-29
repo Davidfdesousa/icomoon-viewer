@@ -5,6 +5,7 @@ import './App.css'
 interface Glyph {
   properties: {
     name: string
+    code: number
     tags?: string[]
   }
 }
@@ -23,7 +24,7 @@ export default function App() {
   })
 
   const handleCopy = (name: string) => {
-    const snippet = `<i class="icon icomoon icon-${name}"></i>`
+    const snippet = `<i class=\"icon icomoon icon-${name}\"></i>`
     navigator.clipboard.writeText(snippet).then(() => {
       setToastMessage(`Copiado: icon-${name}`)
     })
@@ -39,10 +40,11 @@ export default function App() {
   return (
     <div className="app-container">
       <h1 className="app-header">Ícones IcoMoon</h1>
+
       <input
         className="app-input"
         type="text"
-        placeholder="Filtrar por nome ou keyword…"
+        placeholder="Filtrar por nome ou keyword..."
         value={filter}
         onChange={e => setFilter(e.target.value)}
       />
@@ -55,7 +57,13 @@ export default function App() {
             onClick={() => handleCopy(g.properties.name)}
           >
             <i className={`icon icomoon icon-${g.properties.name}`} />
-            <div className="icon-name">{g.properties.name}</div>
+
+             <div className="details">
+               <span className="label">{g.properties.name}</span>
+               <span className="code">
+                 U            {g.properties.code.toString(16).toUpperCase()}
+               </span>
+             </div>
           </div>
         ))}
       </div>

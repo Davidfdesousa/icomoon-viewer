@@ -1,47 +1,77 @@
-/* src/App.css */
+/* corpo centralizado e fundo */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #121212; /* opcional */
+  color: #fff;         /* opcional */
+}
 
+/* container fixo e centralizado */
 .app-container {
-  max-width: 1000px;
-  margin: 0 auto;
+  width: 1000px;
   padding: 24px;
-  font-family: sans-serif;
-}
-
-.app-header {
-  text-align: center;
-}
-
-.app-input {
-  width: 100%;
-  padding: 8px;
-  margin: 16px 0;
-  font-size: 16px;
   box-sizing: border-box;
 }
 
+/* cabeçalho */
+.app-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* input de busca */
+.app-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  box-sizing: border-box;
+  background: #1e1e1e; /* opcional */
+  color: #fff;         /* opcional */
+  border: 1px solid #555;
+  border-radius: 4px;
+}
+
+/* grid de ícones */
 .icon-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 16px;
 }
 
+/* cartão do ícone */
 .icon-card {
   text-align: center;
   padding: 16px;
-  border: 1px solid #ddd;
+  border: 1px solid #555;
   border-radius: 4px;
   cursor: pointer;
 }
 
+/* tamanho do ícone */
 .icon-card i {
-  font-size: 32px;
+  font-size: 48px;
 }
 
-.icon-name {
-  font-size: 12px;
+/* container das infos */
+.icon-info {
   margin-top: 8px;
 }
 
+/* nome do ícone */
+.icon-name {
+  font-size: 14px;
+}
+
+/* unicode do ícone */
+.icon-codepoint {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* toast de cópia */
 .toast {
   position: fixed;
   bottom: 24px;
@@ -51,4 +81,24 @@
   color: #fff;
   padding: 8px 16px;
   border-radius: 4px;
+}
+
+
+.details {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  white-space: nowrap; /* evita quebra de linha */
+  font-family: sans-serif;  /* força fonte de texto normal */
+}
+
+.label {
+  font-size: 14px;
+  color: #fff;
+}
+
+.code {
+  font-size: 12px;
+  color: #aaa;
 }
