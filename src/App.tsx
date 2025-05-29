@@ -1,35 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react'
+import selection from './assets/icomoon/selection.json'
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+interface Glyph {
+  properties: { name: string }
 }
 
-export default App
+export default function App() {
+  const glyphs = (selection as any).icons as Glyph[]
+  const [filter, setFilter] = useState('')
+
+  const filtered = glyphs.filter(g =>
+    g.properties.name.toLowerCase().includes(filter.toLowerCase())
+  )
+
+  return (
+    <div style={{ padding: 24, fontFamily: 'sans-serif' }}>
+      <h1>Ícones IcoMoon</h1>
+      <input
+        type="text"
+        placeholder="Filtrar por nome…"
+        value={filter}
+        onChange={e => setFilter(e.target.value)}
+        style={{
+          width: '100%',
+          padding: 8,
+          margin: '16px 0',
+          fontSize: 16,
+          boxSizing: 'border-box'
+        }}
+      />
+
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))',
+          gap: 12
+        }}
+      >
+        {filtered.map(g => (
+          <div
+            key={g.properties.name}
+            style={{
+              textAlign: 'center',
+              padding: 8,
+              border: '1px solid #ddd',
+              borderRadius: 4
+            }}
+          >
+            <i
+              className={`icon icomoon icon-${g.properties.name}`}
+              style={{ fontSize: 24 }}
+            />
+            <div style={{ fontSize: 12, marginTop: 4 }}>
+              {g.properties.name}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
