@@ -1,50 +1,60 @@
-import React, { useState } from 'react'
-import selection from './assets/icomoon/selection.json'
+import React, { useState } from "react";
+import selection from "./assets/icomoon/selection.json";
 
 interface Glyph {
-  properties: { name: string }
+  properties: { name: string };
+  icon: { tags?: string[] };
 }
 
-export default function App() {
-  const glyphs = (selection as any).icons as Glyph[]
-  const [filter, setFilter] = useState('')
+// depois de importar:
+const glyphs = (selection as any).icons as Glyph[];
 
-  const filtered = glyphs.filter(g =>
-    g.properties.name.toLowerCase().includes(filter.toLowerCase())
-  )
+export default function App() {
+  const glyphs = (selection as any).icons as Glyph[];
+  const [filter, setFilter] = useState<string>("");
+
+  const filtered = glyphs.filter((g) => {
+    const terms = [g.properties.name, ...(g.icon.tags ?? [])].map((t) =>
+      t.toLowerCase()
+    );
+    return terms.some((t) => t.includes(filter.toLowerCase()));
+  });
+
+  const handleCopy = (name: string) => {
+    const snippet = `<i class="icon icomoon icon-${name}"></i>`;
+    navigator.clipboard
+      .writeText(snippet)
+      .then(() => alert(`Copiado: icon-${name}`));
+  };
 
   return (
-    <div style={{ padding: 24, fontFamily: 'sans-serif' }}>
+    <div style={{ padding: 24, fontFamily: "sans-serif" }}>
       <h1>Ícones IcoMoon</h1>
       <input
         type="text"
-        placeholder="Filtrar por nome…"
+        placeholder="Filtrar por nome ou keyword…"
         value={filter}
-        onChange={e => setFilter(e.target.value)}
-        style={{
-          width: '100%',
-          padding: 8,
-          margin: '16px 0',
-          fontSize: 16,
-          boxSizing: 'border-box'
-        }}
+        onChange={(e) => setFilter(e.target.value)}
+        style={{ width: "100%", padding: 8, margin: "16px 0" }}
       />
 
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))',
-          gap: 12
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(80px,1fr))",
+          gap: 12,
         }}
       >
-        {filtered.map(g => (
+        {filtered.map((g) => (
           <div
             key={g.properties.name}
+            onClick={() => handleCopy(g.properties.name)}
             style={{
-              textAlign: 'center',
+              textAlign: "center",
               padding: 8,
-              border: '1px solid #ddd',
-              borderRadius: 4
+              border: "1px solid #ddd",
+              borderRadius: 4,
+              cursor: "pointer",
             }}
           >
             <i
@@ -58,5 +68,5 @@ export default function App() {
         ))}
       </div>
     </div>
-  )
+  );
 }
